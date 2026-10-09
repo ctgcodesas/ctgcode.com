@@ -33,12 +33,13 @@ interface Props {
 
 const { lang } = Astro.props;
 const t: LocaleSchema = locales[lang];
+const whatsappNumber = siteConfig.whatsapp[lang];
 
 const otherLang = lang === "es" ? "en" : "es";
 
 /* El chat abre con el motivo ya redactado en el idioma de la página: quien
    pulsa solo tiene que darle a enviar. */
-const whatsappHref = `https://wa.me/${siteConfig.whatsapp}?text=${encodeURIComponent(t.footer.form.whatsappMessage)}`;
+const whatsappHref = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(t.footer.form.whatsappMessage)}`;
 const home = localizedPath(lang);
 const year = new Date().getFullYear();
 
@@ -65,7 +66,7 @@ const channelItems = [
   {
     code: "wa",
     label: "WhatsApp",
-    href: `https://wa.me/${siteConfig.whatsapp}`,
+    href: `https://wa.me/${whatsappNumber}`,
   },
   {
     code: "ig",

@@ -86,7 +86,7 @@ interface PageSchemaInput {
 }
 
 /** La organización: la ficha de identidad de CTG Code. */
-function organization() {
+function organization(lang: keyof typeof locales) {
   return {
     '@type': 'Organization',
     '@id': ORG_ID,
@@ -113,7 +113,7 @@ function organization() {
       name: siteConfig.author,
     },
     email: `mailto:contacto@ctgcode.com`,
-    telephone: `+${siteConfig.whatsapp}`,
+    telephone: `+${siteConfig.whatsapp[lang]}`,
     // Solo ciudad —la misma que declara `legal.ts` como domicilio social—: el
     // estudio trabaja en remoto y no tiene local abierto al público, así que
     // declarar una calle sería falso.
@@ -134,7 +134,7 @@ function organization() {
         '@type': 'ContactPoint',
         contactType: 'customer service',
         email: 'contacto@ctgcode.com',
-        telephone: `+${siteConfig.whatsapp}`,
+        telephone: `+${siteConfig.whatsapp[lang]}`,
         availableLanguage: ['es', 'en'],
         areaServed: 'Worldwide',
       },
@@ -441,7 +441,7 @@ export function buildSchema({
   if (crumbs) page.breadcrumb = { '@id': crumbs['@id'] };
 
   const graph: unknown[] = [
-    organization(),
+    organization(lang),
     website(lang),
     siteNavigation(lang),
     page,
